@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SignUp extends AppCompatActivity {
 
-    EditText inputFname, inputMname, inputLname, inputAge, inputContactNo, inputEmail, inputUsername;
+    EditText inputFname, inputMname, inputLname, inputAge, inputContactNo, inputEmail, inputUsername, inputPassword;
     Button btnSignup;
     SQLiteDB databaseHelper;
 
@@ -28,6 +28,7 @@ public class SignUp extends AppCompatActivity {
         inputContactNo = findViewById(R.id.inputContactNo);
         inputEmail = findViewById(R.id.inputEmail);
         inputUsername = findViewById(R.id.inputUsername);
+        inputPassword = findViewById(R.id.inputPassword);
 
         btnSignup = findViewById(R.id.btnSignup);
         btnSignup.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +47,7 @@ public class SignUp extends AppCompatActivity {
         String contactNo = inputContactNo.getText().toString().trim();
         String email = inputEmail.getText().toString().trim();
         String username = inputUsername.getText().toString().trim();
+        String password = inputPassword.getText().toString().trim();
 
         if (!firstName.isEmpty() && !middleName.isEmpty() && !lastName.isEmpty() && !age.isEmpty()
                 && !contactNo.isEmpty() && !email.isEmpty() && !username.isEmpty()) {
@@ -53,7 +55,7 @@ public class SignUp extends AppCompatActivity {
             int intAge = Integer.parseInt(age);
 
             boolean isAdded = databaseHelper.addUser(firstName, middleName, lastName,
-                    intAge, contactNo, email, username, getApplicationContext());
+                    intAge, contactNo, email, username, password, getApplicationContext());
 
             if (isAdded) {
                 Toast.makeText(getApplicationContext(), "Registered Sucessfully!", Toast.LENGTH_SHORT).show();
