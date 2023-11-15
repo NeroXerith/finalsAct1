@@ -5,9 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
 
 public class AdminPanel extends AppCompatActivity {
@@ -19,7 +17,7 @@ public class AdminPanel extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_panel);
 
-        dbHelper = new SQLiteDB(this); // Initialize your database helper
+        dbHelper = new SQLiteDB(this); // Initialize database helper
 
         ListView listView = findViewById(R.id.listView);
 
@@ -33,19 +31,23 @@ public class AdminPanel extends AppCompatActivity {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         ArrayList<String> dataList = new ArrayList<>();
 
-        Cursor cursor = db.rawQuery("SELECT " + SQLiteDB.COLUMN_FIRST_NAME + " FROM " + SQLiteDB.TABLE_NAME, null);
+        Cursor cursor = db.rawQuery("SELECT " + SQLiteDB.COLUMN_ID + ", " + SQLiteDB.COLUMN_FIRST_NAME + ", " +
+                SQLiteDB.COLUMN_MIDDLE_NAME + ", " + SQLiteDB.COLUMN_LAST_NAME + " FROM " + SQLiteDB.TABLE_NAME, null);
 
         if (cursor != null) {
-            int columnIndex = cursor.getColumnIndex(SQLiteDB.COLUMN_FIRST_NAME);
+            int idColumnIndex = cursor.getColumnIndex(SQLiteDB.COLUMN_ID);
+            int firstNameColumnIndex = cursor.getColumnIndex(SQLiteDB.COLUMN_FIRST_NAME);
+            int middleNameColumnIndex = cursor.getColumnIndex(SQLiteDB.COLUMN_MIDDLE_NAME);
+            int lastNameColumnIndex = cursor.getColumnIndex(SQLiteDB.COLUMN_LAST_NAME);
 
-            if (columnIndex != -1) {
-                while (cursor.moveToNext()) {
-                    String firstName = cursor.getString(columnIndex);
-                    dataList.add(firstName);
-                }
-            } else {
-                // Handle the case where the column index is -1 (column not found)
-                // You can log an error, show a message, or handle it accordingly
+            while (cursor.moveToNext()) {
+                int id = cursor.getInt(idColumnIndex);
+                String firstName = cursor.getString(firstNameColumnIndex);
+                String middleName = cursor.getString(middleNameColumnIndex);
+                String lastName = cursor.getString(lastNameColumnIndex);
+
+                String data =   id + "\t\t\t" + firstName + " " + middleName + " " + lastName;
+                dataList.add(data);
             }
 
             cursor.close();

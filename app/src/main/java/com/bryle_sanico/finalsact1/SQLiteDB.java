@@ -1,5 +1,4 @@
 package com.bryle_sanico.finalsact1;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,8 +8,9 @@ import android.widget.Toast;
 
 public class SQLiteDB extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "registered_user";
+    private static final String DATABASE_NAME = "registered_users";
     private static final int DATABASE_VERSION = 1;
+    private Context mContext;
 
     static final String TABLE_NAME = "Users";
     static final String COLUMN_ID = "id";
@@ -27,6 +27,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
 
     public SQLiteDB(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        mContext = context;
     }
 
     @Override
@@ -41,10 +42,34 @@ public class SQLiteDB extends SQLiteOpenHelper {
                 COLUMN_EMAIL + " TEXT, " +
                 COLUMN_USERNAME + " TEXT, " +
                 COLUMN_PASSWORD + " TEXT, " +
-                COLUMN_STATUS + " TEXT DEFAULT 'On Process', " +
-                COLUMN_TYPE + " TEXT DEFAULT 'normal'" +
+                COLUMN_STATUS + " TEXT DEFAULT 'For Approval', " +
+                COLUMN_TYPE + " TEXT DEFAULT 'Normal'" +
                 ")";
         db.execSQL(createTableQuery);
+
+        // Inserting the first record with specific values
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_FIRST_NAME, "Bryle");
+        contentValues.put(COLUMN_MIDDLE_NAME, "Turbanada");
+        contentValues.put(COLUMN_LAST_NAME, "Sanico");
+        contentValues.put(COLUMN_AGE, 18);
+        contentValues.put(COLUMN_CONTACT, "09279709414");
+        contentValues.put(COLUMN_EMAIL, "astar8820@gmail.com");
+        contentValues.put(COLUMN_USERNAME, "Xerith");
+        contentValues.put(COLUMN_PASSWORD, "admin123");
+        contentValues.put(COLUMN_STATUS, "Approved");
+        contentValues.put(COLUMN_TYPE, "Admin");
+
+        // Insert the first record into the database
+        long result = db.insert(TABLE_NAME, null, contentValues);
+
+        if (result == -1) {
+            // Failed to insert initial record
+            Toast.makeText(mContext, "Failed to insert initial record", Toast.LENGTH_SHORT).show();
+        } else {
+            // Initial record inserted successfully
+            Toast.makeText(mContext, "Initial record inserted successfully", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -54,7 +79,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
     }
 
     public boolean addUser(String firstName, String middleName, String lastName,
-                           int age, String contact, String email, String username, String password, Context context) {
+                           int age, String contact, String email, String username, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_FIRST_NAME, firstName);
@@ -66,16 +91,18 @@ public class SQLiteDB extends SQLiteOpenHelper {
         contentValues.put(COLUMN_USERNAME, username);
         contentValues.put(COLUMN_PASSWORD, password);
 
+        // Check if the username already exists in the database
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_USERNAME + "=?", new String[]{username});
         if (cursor.getCount() > 0) {
             cursor.close();
-            Toast.makeText(context, "Username already exists", Toast.LENGTH_SHORT).show();
-            return false;
-        } else {
-            cursor.close();
-            long result = db.insert(TABLE_NAME, null, contentValues);
-            return result != -1;
+            return false; // Username already exists
         }
+
+        cursor.close();
+
+        // Insert new user data into the database
+        long result = db.insert(TABLE_NAME, null, contentValues);
+        return result != -1;
     }
 
     public boolean isValidUser(String username, String password) {
@@ -104,6 +131,24 @@ public class SQLiteDB extends SQLiteOpenHelper {
         }
         cursor.close();
         return status;
+    }
+
+    public String getUserType(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " + COLUMN_TYPE + " FROM " + TABLE_NAME +
+                " WHERE " + COLUMN_USERNAME + " = ?", new String[]{username});
+        String userType = "";
+
+        if (cursor.moveToFirst()) {
+            int columnIndex = cursor.getColumnIndex(COLUMN_TYPE);
+            if (columnIndex != -1) {
+                userType = cursor.getString(columnIndex);
+            } else {
+                userType = "Type column not found";
+            }
+        }
+        cursor.close();
+        return userType;
     }
 
 }

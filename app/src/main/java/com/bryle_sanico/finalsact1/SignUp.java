@@ -50,12 +50,12 @@ public class SignUp extends AppCompatActivity {
         String password = inputPassword.getText().toString().trim();
 
         if (!firstName.isEmpty() && !middleName.isEmpty() && !lastName.isEmpty() && !age.isEmpty()
-                && !contactNo.isEmpty() && !email.isEmpty() && !username.isEmpty()) {
+                && !contactNo.isEmpty() && !email.isEmpty() && !username.isEmpty() && !password.isEmpty()) {
 
             int intAge = Integer.parseInt(age);
 
             boolean isAdded = databaseHelper.addUser(firstName, middleName, lastName,
-                    intAge, contactNo, email, username, password, getApplicationContext());
+                    intAge, contactNo, email, username, password);
 
             if (isAdded) {
                 Toast.makeText(getApplicationContext(), "Registered Sucessfully!", Toast.LENGTH_SHORT).show();
