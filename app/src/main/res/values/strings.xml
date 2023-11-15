@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">finalsAct1</string>
+    <string name="login_user">Username</string>
+    <string name="login_pass">Password</string>
+    <string name="btnLoginTxt">LOGIN</string>
+    <string name="btnSignupTxt">SIGNUP</string>
+    <string name="fullName_signup">Full Name : </string>
+    <string name="bdate_signup">Birthdate</string>
+    <string name="email_signup">Email : </string>
+    <string name="contact_signup">Contact # : </string>
+    <string name="age_signup">Age : </string>
+    <string name="user_signup">Username : </string>
+</resources>
