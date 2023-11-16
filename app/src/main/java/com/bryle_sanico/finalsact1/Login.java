@@ -109,8 +109,8 @@ public class Login extends AppCompatActivity {
                 SQLiteDB.COLUMN_EMAIL + " TEXT, " +
                 SQLiteDB.COLUMN_USERNAME + " TEXT, " +
                 SQLiteDB.COLUMN_PASSWORD + " TEXT, " +
-                SQLiteDB.COLUMN_STATUS + " TEXT DEFAULT 'On Process', " +
-                SQLiteDB.COLUMN_TYPE + " TEXT DEFAULT 'normal'" +
+                SQLiteDB.COLUMN_STATUS + " TEXT DEFAULT 'For Approval', " +
+                SQLiteDB.COLUMN_TYPE + " TEXT DEFAULT 'Normal'" +
                 ")";
 
         db.execSQL(createTableQuery);

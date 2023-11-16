@@ -105,6 +105,21 @@ public class SQLiteDB extends SQLiteOpenHelper {
         return result != -1;
     }
 
+
+    public boolean updateUserStatus(int userId, String newStatus) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_STATUS, newStatus);
+
+        String selection = COLUMN_ID + "=?";
+        String[] selectionArgs = { String.valueOf(userId) };
+
+        int count = db.update(TABLE_NAME, values, selection, selectionArgs);
+
+        return count > 0;
+    }
+
+
     public boolean isValidUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME +

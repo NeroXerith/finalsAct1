@@ -1,11 +1,13 @@
 package com.bryle_sanico.finalsact1;
 
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 public class AdminPanel extends AppCompatActivity {
@@ -25,6 +27,17 @@ public class AdminPanel extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dataList);
         listView.setAdapter(adapter); // Set the adapter for the ListView
+
+        // Set item click listener for the ListView
+        // Inside AdminPanel activity
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            String selectedData = dataList.get(position); // Assuming dataList is the list displayed in ListView
+            Intent intent = new Intent(AdminPanel.this, GuestProfile.class);
+            intent.putExtra("userData", selectedData);
+            startActivity(intent);
+        });
+
+
     }
 
     private ArrayList<String> getDataFromDB() {
