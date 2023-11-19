@@ -63,7 +63,7 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this, "Invalid user status", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(Login.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, "Invalid credentials.", Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(Login.this, "Please enter username and password", Toast.LENGTH_SHORT).show();
