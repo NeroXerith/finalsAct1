@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="20dp">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,19 +24,37 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txtFname_signup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/fullName_signup"
-                    android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/txtFullName"
+                    android:id="@+id/txtUserID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text=""
                     android:textStyle="bold" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txtFullName_GP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Name : "
+                    android:textStyle="bold"
+                    android:focusable="false"
+                    android:clickable="false"/>
+
+                <EditText
+                    android:id="@+id/inputFullName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:inputType="none"
+                    android:textSize="18sp"
+                    android:hint="FullName"
+                    android:focusable="false"
+                    android:clickable="false"/>
 
             </LinearLayout>
             <LinearLayout
@@ -56,8 +76,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textSize="18sp"
-                    android:inputType="number"
-                    android:hint="18"/>
+                    android:inputType="none"
+                    android:hint="18"
+                    android:focusable="false"
+                    android:clickable="false"/>
 
                 <TextView
                     android:id="@+id/txtContact_signup"
@@ -73,9 +95,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textSize="18sp"
-                    android:inputType="number"
+                    android:inputType="none"
                     android:hint="09372709442"
-                    />
+                    android:focusable="false"
+                    android:clickable="false"/>
             </LinearLayout>
 
             <LinearLayout
@@ -96,8 +119,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textSize="18sp"
-                    android:inputType="textEmailAddress"
-                    android:hint="example123@google.com"/>
+                    android:inputType="none"
+                    android:hint="example123@google.com"
+                    android:focusable="false"
+                    android:clickable="false"/>
 
             </LinearLayout>
 
@@ -111,7 +136,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="@string/user_signup"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:clickable="false"/>
 
                 <EditText
                     android:id="@+id/inputUsername"
@@ -120,7 +148,9 @@
                     android:layout_marginTop="10dp"
                     android:textSize="18sp"
                     android:hint="JuanDela123"
-                    />
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:clickable="false"/>
 
             </LinearLayout>
 
@@ -133,35 +163,91 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="@string/pass_signup"
-                    android:textStyle="bold"/>
+                    android:text="Status : "
+                    android:textStyle="bold"
+                    android:focusable="false"
+                    android:clickable="false"/>
 
                 <EditText
-                    android:id="@+id/inputPassword"
+                    android:id="@+id/inputStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:inputType="textPassword"
+                    android:inputType="none"
                     android:textSize="18sp"
-                    android:hint="Password"
-                    />
+                    android:hint="Status"
+                    android:focusable="false"
+                    android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txtType_GP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Type : "
+                    android:textStyle="bold"
+                    android:focusable="false"
+                    android:clickable="false"/>
+
+                <EditText
+                    android:id="@+id/inputType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:inputType="none"
+                    android:textSize="18sp"
+                    android:hint="Type"
+                    android:focusable="false"
+                    android:clickable="false"/>
 
             </LinearLayout>
             <Button
-                android:id="@+id/btnApprove"
+                android:id="@+id/btnEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:textSize="35sp"
-                android:text="APPROVE"/>
-            <Button
-                android:id="@+id/btnReject"
+                android:text="EDIT"
+                />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:textSize="35sp"
-                android:text="REJECT"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp">
+
+                <Button
+                    android:id="@+id/btnApprove"
+                    android:layout_width="290dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="APPROVE"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnReject"
+                    android:layout_width="280dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="REJECT"
+                    android:visibility="gone" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </RelativeLayout>
+
+
+
+
+    </ScrollView>
 </FrameLayout>

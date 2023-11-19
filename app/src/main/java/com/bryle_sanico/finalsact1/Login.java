@@ -56,7 +56,8 @@ public class Login extends AppCompatActivity {
                     } else {
                         openGuestProfileActivity();
                     }
-                } else if ("On Process".equalsIgnoreCase(userStatus)) {
+                    finish();
+                } else if ("For Approval".equalsIgnoreCase(userStatus)) {
                     Toast.makeText(Login.this, "Your account is still for approval.", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(Login.this, "Invalid user status", Toast.LENGTH_SHORT).show();

@@ -80,6 +80,7 @@
             android:layout_height="wrap_content"
             android:text="Empty Database"
             android:textSize="18sp"
+
             android:layout_below="@+id/btnTest"
             android:layout_marginTop="20dp" />
     </RelativeLayout>

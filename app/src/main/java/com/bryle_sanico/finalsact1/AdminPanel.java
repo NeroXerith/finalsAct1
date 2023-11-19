@@ -32,10 +32,14 @@ public class AdminPanel extends AppCompatActivity {
         // Inside AdminPanel activity
         listView.setOnItemClickListener((parent, view, position, id) -> {
             String selectedData = dataList.get(position); // Assuming dataList is the list displayed in ListView
+            String[] userDataParts = selectedData.split("\t\t\t"); // Split the selected data
+            String userId = userDataParts[0]; // Extract the user ID
+
             Intent intent = new Intent(AdminPanel.this, GuestProfile.class);
-            intent.putExtra("userData", selectedData);
+            intent.putExtra("userId", userId); // Pass only the user ID
             startActivity(intent);
         });
+
 
 
     }
