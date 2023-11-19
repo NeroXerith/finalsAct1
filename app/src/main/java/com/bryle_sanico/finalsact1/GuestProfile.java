@@ -1,14 +1,15 @@
 package com.bryle_sanico.finalsact1;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class GuestProfile extends AppCompatActivity {
@@ -16,10 +17,9 @@ public class GuestProfile extends AppCompatActivity {
     private String fullName;
     private int userID;
     private String firstName, middleName, lastName, age, contact, email, username, password, status, type;
-    // Add variables for each column's data
     private SQLiteDB dbHelper;
     private Button btnApprove, btnReject, btnDelete;
-    private String userType ="";
+    private String userType = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,6 @@ public class GuestProfile extends AppCompatActivity {
         btnReject = findViewById(R.id.btnReject);
         btnDelete = findViewById(R.id.btnDelete);
 
-        // Check if admim, if Yes then btnDelete will be visible
         checkUserType();
 
         TextView txtUserID = findViewById(R.id.txtUserID);
@@ -49,10 +48,8 @@ public class GuestProfile extends AppCompatActivity {
             String userId = intent.getStringExtra("userId");
             userID = Integer.parseInt(userId);
 
-            // Fetch record from the database using the userID
             getUserDataFromDatabase();
 
-            // Display the fetched data
             txtUserID.setText("User ID: " + userID);
             inputFullName.setText(fullName);
             inputEmail.setText(email);
@@ -62,21 +59,21 @@ public class GuestProfile extends AppCompatActivity {
             inputType.setText(type);
             inputStatus.setText(status);
 
-            // Check the status value from the EditText
             if (inputStatus.getText().toString().equals("For Approval")) {
-                // If the status is "For Approval", set visibility of buttons to VISIBLE
                 btnApprove.setVisibility(View.VISIBLE);
                 btnReject.setVisibility(View.VISIBLE);
             } else {
-                // If the status is different, hide the buttons
                 btnApprove.setVisibility(View.GONE);
                 btnReject.setVisibility(View.GONE);
             }
         }
-//        if (intent != null && intent.hasExtra("isAdmin")){
-//            // Check if admim, if Yes then btnDelete will be visible
-//            checkUserType();
-//        }
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteUser(userID);
+            }
+        });
 
         btnApprove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +88,6 @@ public class GuestProfile extends AppCompatActivity {
                 updateStatus(userID, "Rejected");
             }
         });
-
     }
 
     private void checkUserType() {
@@ -100,35 +96,49 @@ public class GuestProfile extends AppCompatActivity {
             userType = intent.getStringExtra("userType");
         }
 
-        if(userType.equals("Yes")){
+        if (userType.equals("Admin")) {
             btnDelete.setVisibility(View.VISIBLE);
         } else {
             btnDelete.setVisibility(View.GONE);
         }
     }
 
-
     private void updateStatus(int userId, String newStatus) {
-        // Update the status in the database
         boolean isUpdated = dbHelper.updateUserStatus(userId, newStatus);
 
         if (isUpdated) {
-            // Update successful
             String statusMessage = "Status updated to " + newStatus;
             Toast.makeText(GuestProfile.this, statusMessage, Toast.LENGTH_SHORT).show();
-            // Hide buttons after status update
             btnApprove.setVisibility(View.GONE);
             btnReject.setVisibility(View.GONE);
 
-            // Navigate back to AdminPanel activity
-            Intent intent = new Intent(GuestProfile.this, AdminPanel.class);
-            startActivity(intent);
+            Intent intent = new Intent();
+            intent.putExtra("refreshAdminPanel", true); // Set the refresh flag to true
+            setResult(RESULT_OK, intent); // Set result to trigger refresh in AdminPanel
+
             finish();
         } else {
-            // Update failed
             Toast.makeText(GuestProfile.this, "Failed to update status", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void deleteUser(int userId) {
+        boolean isDeleted = dbHelper.deleteUser(userId);
+
+        if (isDeleted) {
+            String deleteMessage = "User record deleted";
+            Toast.makeText(GuestProfile.this, deleteMessage, Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent();
+            intent.putExtra("refreshAdminPanel", true); // Set the refresh flag to true
+            setResult(RESULT_OK, intent); // Set result to trigger refresh in AdminPanel
+
+            finish();
+        } else {
+            Toast.makeText(GuestProfile.this, "Failed to delete record", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void getUserDataFromDatabase() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(
@@ -151,9 +161,7 @@ public class GuestProfile extends AppCompatActivity {
             int usernameColumnIndex = cursor.getColumnIndex(SQLiteDB.COLUMN_USERNAME);
             int statusColumnIndex = cursor.getColumnIndex(SQLiteDB.COLUMN_STATUS);
             int typeColumnIndex = cursor.getColumnIndex(SQLiteDB.COLUMN_TYPE);
-            // Add other column indices for each column
 
-            // Check if the column index is valid (-1 indicates column not found)
             if (firstNameColumnIndex != -1 && middleNameColumnIndex != -1 && lastNameColumnIndex != -1) {
                 firstName = cursor.getString(firstNameColumnIndex);
                 middleName = cursor.getString(middleNameColumnIndex);
@@ -164,14 +172,12 @@ public class GuestProfile extends AppCompatActivity {
                 username = cursor.getString(usernameColumnIndex);
                 status = cursor.getString(statusColumnIndex);
                 type = cursor.getString(typeColumnIndex);
-                // Retrieve other column values using respective indices
 
                 fullName = firstName + " " + middleName + " " + lastName;
 
                 cursor.close();
             } else {
-                // Handle case where column index is -1 (column not found)
-                // Log an error, show a message, or handle it according to your app logic
+                Toast.makeText(GuestProfile.this, "Column not found", Toast.LENGTH_SHORT).show();
             }
         }
     }

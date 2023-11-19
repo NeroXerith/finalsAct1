@@ -1,9 +1,7 @@
 package com.bryle_sanico.finalsact1;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,10 +27,7 @@ public class Login extends AppCompatActivity {
 
         btnSignup.setOnClickListener(v -> openSignUpActivity());
         btnTest.setOnClickListener(v -> openAdminPanelActivity());
-        btnEmptyDatabase.setOnClickListener(v -> {
-
-            emptyDatabase();
-        });
+        btnEmptyDatabase.setOnClickListener(v -> emptyDatabase());
 
         btnLogin.setOnClickListener(v -> {
             String username = inputUser.getText().toString().trim();
@@ -82,13 +77,9 @@ public class Login extends AppCompatActivity {
         return dbHelper.isValidUser(username, password);
     }
 
-    private String getUserStatus(String username) {
-        return dbHelper.getUserStatus(username);
-    }
-
     private void openAdminPanelActivity() {
         Intent intent = new Intent(Login.this, AdminPanel.class);
-        intent.putExtra("isAdmin", "Yes");
+        intent.putExtra("userType", "Admin");
         startActivity(intent);
     }
 

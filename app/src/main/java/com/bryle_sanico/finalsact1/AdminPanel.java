@@ -1,19 +1,24 @@
 package com.bryle_sanico.finalsact1;
-
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.widget.AdapterView;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import java.util.ArrayList;
 
 public class AdminPanel extends AppCompatActivity {
 
+    private static final int GUEST_PROFILE_REQUEST = 1; // Request code for GuestProfile activity
     private SQLiteDB dbHelper;
-    private String userType="";
+    private String userType = "";
+    private boolean refresh = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +27,8 @@ public class AdminPanel extends AppCompatActivity {
         dbHelper = new SQLiteDB(this); // Initialize database helper
 
         Intent intent2 = getIntent();
-        if(intent2 != null && intent2.hasExtra("isAdmin")){
-            userType = intent2.getStringExtra("isAdmin");
+        if (intent2 != null && intent2.hasExtra("userType")) {
+            userType = intent2.getStringExtra("userType");
         }
 
         ListView listView = findViewById(R.id.listView);
@@ -34,7 +39,6 @@ public class AdminPanel extends AppCompatActivity {
         listView.setAdapter(adapter); // Set the adapter for the ListView
 
         // Set item click listener for the ListView
-        // Inside AdminPanel activity
         listView.setOnItemClickListener((parent, view, position, id) -> {
             String selectedData = dataList.get(position);
             String[] userDataParts = selectedData.split("\t\t\t");
@@ -43,11 +47,8 @@ public class AdminPanel extends AppCompatActivity {
             Intent intent = new Intent(AdminPanel.this, GuestProfile.class);
             intent.putExtra("userId", userId);
             intent.putExtra("userType", userType);
-            startActivity(intent);
+            startActivityForResult(intent, GUEST_PROFILE_REQUEST); // Start GuestProfile activity for result
         });
-
-
-
     }
 
     private ArrayList<String> getDataFromDB() {
@@ -69,7 +70,7 @@ public class AdminPanel extends AppCompatActivity {
                 String middleName = cursor.getString(middleNameColumnIndex);
                 String lastName = cursor.getString(lastNameColumnIndex);
 
-                String data =   id + "\t\t\t" + firstName + " " + middleName + " " + lastName;
+                String data = id + "\t\t\t" + firstName + " " + middleName + " " + lastName;
                 dataList.add(data);
             }
 
@@ -77,5 +78,17 @@ public class AdminPanel extends AppCompatActivity {
         }
 
         return dataList;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GUEST_PROFILE_REQUEST && resultCode == RESULT_OK) {
+            refresh = data != null && data.getBooleanExtra("refreshAdminPanel", false);
+            if (refresh) {
+                recreate(); // Refresh AdminPanel activity
+            }
+        }
     }
 }

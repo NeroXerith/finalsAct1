@@ -130,6 +130,20 @@ public class SQLiteDB extends SQLiteOpenHelper {
         return isValid;
     }
 
+    public boolean deleteUser(int userId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Define the table name where you store user data
+        String tableName = TABLE_NAME;
+
+        // Define the condition for deletion
+        String selection = COLUMN_ID + " = ?";
+        String[] selectionArgs = { String.valueOf(userId) };
+
+        // Perform the deletion and check the result
+        int deletedRows = db.delete(tableName, selection, selectionArgs);
+        return deletedRows > 0;
+    }
+
     public String getUserStatus(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT " + COLUMN_STATUS + " FROM " + TABLE_NAME +
