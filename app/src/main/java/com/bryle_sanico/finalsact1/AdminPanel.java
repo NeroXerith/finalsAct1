@@ -13,13 +13,18 @@ import java.util.ArrayList;
 public class AdminPanel extends AppCompatActivity {
 
     private SQLiteDB dbHelper;
-
+    private String userType="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_panel);
 
         dbHelper = new SQLiteDB(this); // Initialize database helper
+
+        Intent intent2 = getIntent();
+        if(intent2 != null && intent2.hasExtra("isAdmin")){
+            userType = intent2.getStringExtra("isAdmin");
+        }
 
         ListView listView = findViewById(R.id.listView);
 
@@ -31,12 +36,13 @@ public class AdminPanel extends AppCompatActivity {
         // Set item click listener for the ListView
         // Inside AdminPanel activity
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            String selectedData = dataList.get(position); // Assuming dataList is the list displayed in ListView
-            String[] userDataParts = selectedData.split("\t\t\t"); // Split the selected data
-            String userId = userDataParts[0]; // Extract the user ID
+            String selectedData = dataList.get(position);
+            String[] userDataParts = selectedData.split("\t\t\t");
+            String userId = userDataParts[0];
 
             Intent intent = new Intent(AdminPanel.this, GuestProfile.class);
-            intent.putExtra("userId", userId); // Pass only the user ID
+            intent.putExtra("userId", userId);
+            intent.putExtra("userType", userType);
             startActivity(intent);
         });
 

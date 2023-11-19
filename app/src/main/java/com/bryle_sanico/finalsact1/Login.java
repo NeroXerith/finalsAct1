@@ -1,5 +1,6 @@
 package com.bryle_sanico.finalsact1;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Login extends AppCompatActivity {
 
     private SQLiteDB dbHelper;
-
+    private String userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +42,18 @@ public class Login extends AppCompatActivity {
         });
     }
 
+
     private void loginProcess(String username, String password) {
         if (!username.isEmpty() && !password.isEmpty()) {
             boolean isValidUser = validateUser(username, password);
 
             if (isValidUser) {
+                // Retrieve user ID from the database
+                int retrievedUserId = dbHelper.getUserId(username);
+
+                // Update userId variable
+                userId = String.valueOf(retrievedUserId);
+
                 String userStatus = dbHelper.getUserStatus(username);
 
                 if ("Approved".equalsIgnoreCase(userStatus)) {
@@ -80,11 +88,13 @@ public class Login extends AppCompatActivity {
 
     private void openAdminPanelActivity() {
         Intent intent = new Intent(Login.this, AdminPanel.class);
+        intent.putExtra("isAdmin", "Yes");
         startActivity(intent);
     }
 
     private void openGuestProfileActivity() {
         Intent intent = new Intent(Login.this, GuestProfile.class);
+        intent.putExtra("userId", userId); // Pass only the user ID
         startActivity(intent);
     }
 

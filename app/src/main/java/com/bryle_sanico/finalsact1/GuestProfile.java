@@ -18,7 +18,9 @@ public class GuestProfile extends AppCompatActivity {
     private String firstName, middleName, lastName, age, contact, email, username, password, status, type;
     // Add variables for each column's data
     private SQLiteDB dbHelper;
-    private Button btnApprove, btnReject;
+    private Button btnApprove, btnReject, btnDelete;
+    private String userType; // Declare the variable in the class
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +30,15 @@ public class GuestProfile extends AppCompatActivity {
 
         btnApprove = findViewById(R.id.btnApprove);
         btnReject = findViewById(R.id.btnReject);
+        btnDelete = findViewById(R.id.btnDelete);
 
+        // Check if admim, if Yes then btnDelete will be visible
+        checkUserType();
+        if(userType.equals("Yes")){
+            btnDelete.setVisibility(View.VISIBLE);
+        } else {
+            btnDelete.setVisibility(View.GONE);
+        }
         TextView txtUserID = findViewById(R.id.txtUserID);
         EditText inputFullName = findViewById(R.id.inputFullName);
         EditText inputAge = findViewById(R.id.inputAge);
@@ -37,6 +47,7 @@ public class GuestProfile extends AppCompatActivity {
         EditText inputUsername = findViewById(R.id.inputUsername);
         EditText inputType = findViewById(R.id.inputType);
         EditText inputStatus = findViewById(R.id.inputStatus);
+
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("userId")) {
             String userId = intent.getStringExtra("userId");
@@ -82,6 +93,14 @@ public class GuestProfile extends AppCompatActivity {
         });
 
     }
+
+    private void checkUserType() {
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("userId")) {
+            userType = intent.getStringExtra("userType");
+        }
+    }
+
 
     private void updateStatus(int userId, String newStatus) {
         // Update the status in the database

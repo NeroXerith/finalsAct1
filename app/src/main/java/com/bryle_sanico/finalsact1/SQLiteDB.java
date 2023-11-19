@@ -166,4 +166,21 @@ public class SQLiteDB extends SQLiteOpenHelper {
         return userType;
     }
 
+    public int getUserId(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int userId = -1; // Initialize with a default value
+
+        Cursor cursor = db.rawQuery("SELECT " + COLUMN_ID + " FROM " + TABLE_NAME +
+                " WHERE " + COLUMN_USERNAME + " = ?", new String[]{username});
+
+        if (cursor.moveToFirst()) {
+            int columnIndex = cursor.getColumnIndex(COLUMN_ID);
+            if (columnIndex != -1) {
+                userId = cursor.getInt(columnIndex);
+            } // No need for an else clause here if you handle errors differently
+        }
+        cursor.close();
+        return userId;
+    }
+
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="20dp">
@@ -50,11 +51,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:hint="FullName"
                     android:inputType="none"
                     android:textSize="18sp"
-                    android:hint="FullName"
-                    android:focusable="false"
-                    android:clickable="false"/>
+                    tools:ignore="TouchTargetSizeCheck" />
 
             </LinearLayout>
             <LinearLayout
@@ -63,7 +65,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/txtAge_signup"
+                    android:id="@+id/txtAge_GP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -75,14 +77,15 @@
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textSize="18sp"
-                    android:inputType="none"
-                    android:hint="18"
+                    android:clickable="false"
                     android:focusable="false"
-                    android:clickable="false"/>
+                    android:hint="18"
+                    android:inputType="none"
+                    android:textSize="18sp"
+                    tools:ignore="TouchTargetSizeCheck" />
 
                 <TextView
-                    android:id="@+id/txtContact_signup"
+                    android:id="@+id/txtContact_GP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -94,11 +97,12 @@
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textSize="18sp"
-                    android:inputType="none"
-                    android:hint="09372709442"
+                    android:clickable="false"
                     android:focusable="false"
-                    android:clickable="false"/>
+                    android:hint="09372709442"
+                    android:inputType="none"
+                    android:textSize="18sp"
+                    tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
 
             <LinearLayout
@@ -106,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/txtEmail_signup"
+                    android:id="@+id/txtEmail_GP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -118,11 +122,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textSize="18sp"
-                    android:inputType="none"
-                    android:hint="example123@google.com"
+                    android:clickable="false"
                     android:focusable="false"
-                    android:clickable="false"/>
+                    android:hint="example123@google.com"
+                    android:inputType="none"
+                    android:textSize="18sp"
+                    tools:ignore="TouchTargetSizeCheck" />
 
             </LinearLayout>
 
@@ -131,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/txtUsername_signup"
+                    android:id="@+id/txtUsername_GP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -146,11 +151,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textSize="18sp"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:hint="JuanDela123"
                     android:inputType="none"
-                    android:focusable="false"
-                    android:clickable="false"/>
+                    android:textSize="18sp"
+                    tools:ignore="TouchTargetSizeCheck" />
 
             </LinearLayout>
 
@@ -159,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/txtPassword_signup"
+                    android:id="@+id/txtStatus_GP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -173,11 +179,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:hint="Status"
                     android:inputType="none"
                     android:textSize="18sp"
-                    android:hint="Status"
-                    android:focusable="false"
-                    android:clickable="false"/>
+                    tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -197,11 +204,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:hint="Type"
                     android:inputType="none"
                     android:textSize="18sp"
-                    android:hint="Type"
-                    android:focusable="false"
-                    android:clickable="false"/>
+                    tools:ignore="TouchTargetSizeCheck" />
 
             </LinearLayout>
             <Button
@@ -213,11 +221,21 @@
                 android:text="EDIT"
                 />
 
+            <Button
+                android:id="@+id/btnDelete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="35sp"
+                android:visibility="gone"
+                android:text="DELETE"
+                />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="10dp">
 
                 <Button
                     android:id="@+id/btnApprove"
