@@ -19,7 +19,7 @@ public class GuestProfile extends AppCompatActivity {
     // Add variables for each column's data
     private SQLiteDB dbHelper;
     private Button btnApprove, btnReject, btnDelete;
-    private String userType; // Declare the variable in the class
+    private String userType ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +34,7 @@ public class GuestProfile extends AppCompatActivity {
 
         // Check if admim, if Yes then btnDelete will be visible
         checkUserType();
-        if(userType.equals("Yes")){
-            btnDelete.setVisibility(View.VISIBLE);
-        } else {
-            btnDelete.setVisibility(View.GONE);
-        }
+
         TextView txtUserID = findViewById(R.id.txtUserID);
         EditText inputFullName = findViewById(R.id.inputFullName);
         EditText inputAge = findViewById(R.id.inputAge);
@@ -77,6 +73,10 @@ public class GuestProfile extends AppCompatActivity {
                 btnReject.setVisibility(View.GONE);
             }
         }
+//        if (intent != null && intent.hasExtra("isAdmin")){
+//            // Check if admim, if Yes then btnDelete will be visible
+//            checkUserType();
+//        }
 
         btnApprove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,8 +96,14 @@ public class GuestProfile extends AppCompatActivity {
 
     private void checkUserType() {
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("userId")) {
+        if (intent != null && intent.hasExtra("userId") && intent.hasExtra("userType")) {
             userType = intent.getStringExtra("userType");
+        }
+
+        if(userType.equals("Yes")){
+            btnDelete.setVisibility(View.VISIBLE);
+        } else {
+            btnDelete.setVisibility(View.GONE);
         }
     }
 
