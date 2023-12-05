@@ -130,6 +130,48 @@ public class SQLiteDB extends SQLiteOpenHelper {
         return isValid;
     }
 
+    public boolean updateUser(int userId, String updatedFirstName, String updatedMiddleName,
+                              String updatedLastName, int updatedAge, String updatedContact,
+                              String updatedEmail, String updatedUsername, String updatedPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Check if the updated username already exists in the database
+        boolean isUsernameAvailable = isUsernameAvailable(userId, updatedUsername);
+        if (!isUsernameAvailable) {
+            Toast.makeText(mContext, "Username already exists!", Toast.LENGTH_SHORT).show();
+            return false; // Username already exists, prevent update
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_FIRST_NAME, updatedFirstName);
+        values.put(COLUMN_MIDDLE_NAME, updatedMiddleName);
+        values.put(COLUMN_LAST_NAME, updatedLastName);
+        values.put(COLUMN_AGE, updatedAge);
+        values.put(COLUMN_CONTACT, updatedContact);
+        values.put(COLUMN_EMAIL, updatedEmail);
+        values.put(COLUMN_USERNAME, updatedUsername);
+        values.put(COLUMN_PASSWORD, updatedPassword);
+
+        String selection = COLUMN_ID + "=?";
+        String[] selectionArgs = {String.valueOf(userId)};
+
+        int count = db.update(TABLE_NAME, values, selection, selectionArgs);
+
+        return count > 0;
+    }
+
+    private boolean isUsernameAvailable(int userId, String updatedUsername) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " +
+                        COLUMN_USERNAME + " = ? AND " + COLUMN_ID + " != ?",
+                new String[]{updatedUsername, String.valueOf(userId)});
+
+        boolean isAvailable = cursor.getCount() <= 0;
+
+        cursor.close();
+        return isAvailable;
+    }
+
     public boolean deleteUser(int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         // Define the table name where you store user data

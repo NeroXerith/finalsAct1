@@ -66,22 +66,5 @@
         android:layout_below="@+id/btnLogin"
         android:layout_marginTop="20dp" />
 
-        <Button
-            android:id="@+id/btnTest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TEST"
-            android:textSize="18sp"
-            android:layout_below="@+id/btnSignup"
-            android:layout_marginTop="20dp" />
-        <Button
-            android:id="@+id/btnEmptyDatabase"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Empty Database"
-            android:textSize="18sp"
-
-            android:layout_below="@+id/btnTest"
-            android:layout_marginTop="20dp" />
     </RelativeLayout>
 </FrameLayout>

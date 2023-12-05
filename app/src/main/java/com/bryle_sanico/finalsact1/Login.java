@@ -22,12 +22,8 @@ public class Login extends AppCompatActivity {
         EditText inputPass = findViewById(R.id.inputPass);
         Button btnLogin = findViewById(R.id.btnLogin);
         Button btnSignup = findViewById(R.id.btnSignup);
-        Button btnTest = findViewById(R.id.btnTest);
-        Button btnEmptyDatabase = findViewById(R.id.btnEmptyDatabase);
 
         btnSignup.setOnClickListener(v -> openSignUpActivity());
-        btnTest.setOnClickListener(v -> openAdminPanelActivity());
-        btnEmptyDatabase.setOnClickListener(v -> emptyDatabase());
 
         btnLogin.setOnClickListener(v -> {
             String username = inputUser.getText().toString().trim();

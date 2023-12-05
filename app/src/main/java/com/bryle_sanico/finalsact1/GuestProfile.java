@@ -18,9 +18,10 @@ public class GuestProfile extends AppCompatActivity {
     private int userID;
     private String firstName, middleName, lastName, age, contact, email, username, password, status, type;
     private SQLiteDB dbHelper;
-    private Button btnApprove, btnReject, btnDelete;
+    private Button btnApprove, btnReject, btnDelete, btnEdit;
     private String userType = "";
 
+    private static final int REQUEST_CODE_FETCH_USER_DATA = 100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +32,7 @@ public class GuestProfile extends AppCompatActivity {
         btnApprove = findViewById(R.id.btnApprove);
         btnReject = findViewById(R.id.btnReject);
         btnDelete = findViewById(R.id.btnDelete);
+        btnEdit = findViewById(R.id.btnEdit);
 
         checkUserType();
 
@@ -74,6 +76,14 @@ public class GuestProfile extends AppCompatActivity {
                 deleteUser(userID);
             }
         });
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateUser(userID);
+            }
+        });
+
 
         btnApprove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +148,14 @@ public class GuestProfile extends AppCompatActivity {
             Toast.makeText(GuestProfile.this, "Failed to delete record", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void updateUser(int userId){
+        Intent intent = new Intent(GuestProfile.this, SignUp.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("requestType", "editUser");
+        startActivityForResult(intent, REQUEST_CODE_FETCH_USER_DATA);
+    }
+
 
     private void getUserDataFromDatabase() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();

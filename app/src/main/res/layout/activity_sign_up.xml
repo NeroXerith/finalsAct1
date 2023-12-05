@@ -180,6 +180,30 @@
                     />
 
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+                <TextView
+                    android:id="@+id/txtCPassword_signup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Confirm Password : "
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/inputCPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:inputType="textPassword"
+                    android:textSize="18sp"
+                    android:hint="Password"
+                    />
+            </LinearLayout>
         <Button
             android:id="@+id/btnSignup"
             android:layout_width="match_parent"
@@ -187,6 +211,14 @@
             android:layout_marginTop="40dp"
             android:textSize="35sp"
             android:text="@string/btnSignupTxt"/>
+            <Button
+                android:id="@+id/btnUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:textSize="35sp"
+                android:visibility="gone"
+                android:text="UPDATE"/>
         </LinearLayout>
 
     </RelativeLayout>
